@@ -1,0 +1,59 @@
+,ResCom:synthesis,,,,,,,,,,,,
+Flux,Type,Citation,"Mean or median
+(Pg C yr-1)","Std
+(PgC yr-1)","Trend
+(PgC yr-2)","Timespan
+(years)","Spatial
+resolution","Temporal
+resolution",Model type,Environmental drivers,DOI,Who added?,Notes
+Total respiration,bottom-up,,,,,,,,,,,,
+Total respiration, soil ,,,,,,,,,,,,
+Total respiration,,,,,,,,,,,,,
+Total respiration,eddy-flux up-scaled,Yuan et al. (2011),103.0,,,,,,statistical ,,https://doi.org/10.1029/2011GB004150,KAE,
+Total respiration,eddy-flux up-scaled,Lasslop et al. (2010),98.0,7.0,,,0.5 degree,,statistical ,,,APB,referenced by Jung et al. but I was unable to find exact publication
+Total respiration,eddy-flux up-scaled,Jung et al. (2011),96.6,6.0,,1982-2008,0.5 degree,monthly,statistical ,29 environmental drivers,doi:10.1029/2010JG001566,APB,likely underestimate by 5 to 10%
+Total respiration,top-down,Ballantyne et al. (2017),106.6,12.0,0.11,1982-2012,global values,annual,statistical ,soil moisture and soil temperature,DOI: 10.1038/NCLIMATE3204,APB,
+Total respiration,top-down (residual TER),Liu et al (2022),104.0,1.5,-0.042,1982-2015,global values,annual,statistical ,,https://doi.org/10.1038/s41467-022-33293-x,ZL,use this residual TER approach to calculate trend (?)
+Belowground Rh,bottom-up,Tang et al. (2020),57.2,0.6,0.036,1980-2016,0.5 degrees,annual,machine learning,"temperature, precipitation, N deposition, radiation, soil C, soil N, soil water content",https://doi.org/10.5194/essd-12-1037-2020,KAE,
+Belowground Rh,bottom-up,Hashimoto et al. (2015),51.1,0.7,,1965-2012,0.5 degrees,monthly,statistical,climate (temperature and precipitation),https://doi.org/10.5194/bg-12-4121-2015,KAE,Std. dev. taken as reported by Tang et al. (2020) because I could not find it in the original publication
+Belowground Rh,bottom-up,Tian et al. (2015),51.0,,0.029,1901-2010,0.5 degrees,,mechanistic,"climate, atmospheric CO2, atmospheric N, land-use change",https://doi.org/10.1002/2014GB005021,KAE,Eensemble of TBMs; calculated trend as reported Delta RH (3.2 Pg C over 1901-2010) divided by 109 years
+Belowground Rh,bottom-up,Sitch et al. (2015),57.5,9.8,0.16,1990-2009,0.5 degrees**,monthly,mechanistic,"climate, atmospheric CO2, N cycle*, static land use*",https://doi.org/10.5194/bg-12-653-2015,KAE,"Ensemble of DGVMs. *Only some of the DGVMs in the ensemble included these; **Some DGVMs were coarser, at 3.75 x 2.5 degrees"
+Belowground Rh,bottom-up,Potter & Klooster (1998),57.1,,,1983-1988,1 degree,monthly,mechanistic,"vegetation, climate",https://doi.org/10.1029/98GB02425,KAE,
+Belowground Rh,bottom-up,Yao et al. (2021),46.8,,0.03,1985-2013,0.5 degrees,annual,machine learning,"climate, soil properties, vegetation productivity",https://doi.org/10.1029/2020GB006918,KAE,Asymmetric confidence interval; 95% CI is given as: 38.6–56.3 Pg C yr−1; this study also mis-states the results of Hashimoto et al. (2015) and Konings et al. (2019)
+Belowground Rh,bottom-up,He et al. (2022),48.8,0.9,,1982-2018,0.5 degrees,annual,machine learning,"climate, vegetation productivity, soil properties, soil N, N deposition, vegetation canopy",https://doi.org/10.1111/gcb.16286,KAE,
+Belowground Rh,bottom-up,Lu et al. (2021),50.3,25.0,,1982-2012,0.5 degrees,annual,machine learning,"climate, LAI, PAR, SOC",http://dx.doi.org/10.1088/1748-9326/abf526,BBL,
+Belowground Rh,bottom-up,Raich and Schlesinger (1992),50.0,,,,,,statistical,,http://dx.doi.org/10.1034/j.1600-0889.1992.t01-1-00001.x,RV,
+Belowground Rh,bottom-up,Stell (2021),53.5,,,1961-2018,1 km,annual,machine learning,"annual mean precipitation, annual mean temperature, EVI (mean monthly), mosaic vegetation, artifical surfaces and associated areas, geologial ages, land cover, mean potential incoming solar radiation, mean value of 8 day LAI, long term precipitation, slope, topographic wetness index",https://doi.org/10.1111/gcb.15666,RV,
+Belowground Rh,bottom-up,Warner et al. (2019),49.5 to 49.8,,,1961-2017,1 km,annual,machine learning,"annual mean precipitation, annual mean temperature, EVI (mean monthly), mosaic vegetation, artifical surfaces and associated areas, geologial ages, land cover, mean potential incoming solar radiation, mean value of 8 day LAI, long term precipitation, slope, topographic wetness index",https://doi.org/10.1029/2019GB006264,RV,
+Belowground Rh,bottom-up,Bond-Lamberty et al. (2018),52.9,,,1990-1998,0.5 degrees,annual,statistical,"Climate, LAI, SOC",https://doi.org/10.1038/s41586-018-0358-x,,
+Belowground Rh,bottom-up,Thum et al. (2020),66.1,,,,,monthly,mechanistic,monthly averaged soil temperature and moisture,https://doi.org/10.5194/bg-17-5721-2020,CLC,Caution: these estimates are based on environmental drivers affecting the decomposition of both aboveground and belowground litter pools. 
+Belowground Rh,,,65.5,,,,,monthly,mechanistic,quasi-monthly air temperature and precipitation,,,
+Belowground Rh,top-down,Ciais et al. (2021),39.0,6.5,,2000-2009,global ,annual,statistical ,inventory of regional carbon balance,https://doi.org/10.1093/nsr/nwaa145,,
+Belowground Rh,top-down,Shae et al 2013,41.3 to 71.6,,,,,,other,,,,
+Belowground Rh,top-down,Konings et al. (2019),46.3,19.3,,,4 x 5 degrees,monthly,mechanistic,"vegetation, burned area, biomass, soil carbon",https://doi.org/10.5194/bg-16-2269-2019,KAE,Combined SIF-GPP with estimates of NEP from atmospheric inversion and of CUE from a mechanistic model; Environmental drivers were for the estimates of CUE from CARDAMOM
+Belowground Rh,top-down,Shao et al 2013,41.3 to 71.6,,,1976-2005,,,mechanistic,,https://iopscience.iop.org/article/10.1088/1748-9326/8/3/034034#fnref-erl472988bib25,RV,
+Total Rs,bottom-up,Hursh et al. (2017) ,93.9,25.1,,2014,0.5 degree,annual,statistical,"biome specific general additive models (soil temperature, soil moisture, NPP and soil carbon)",doi: 10.1111/gcb.13489,APB,
+Total Rs,bottom-up,Hursh et al. (2017) ,80.3,24.6,,2014,0.5 degree,annual,mechanistic,"Michaelis-Menton Model (soil temperature,  soil moisture, and soil carbon)",doi: 10.1111/gcb.13489,APB,
+Total Rs,bottom-up,Hursh et al. (2017) ,108.6,69.6,,2014,0.5 degree,annual,mechanistic,"CASA model (soil moisture, and NPP)",doi: 10.1111/gcb.13489,APB,
+Total Rs,bottom-up,Hashimoto et al. (2015),91.0,2.0,0.09,1965-2012,0.5 degrees,monthly,statistical,climate (temperature and precipitation),https://doi.org/10.5194/bg-12-4121-2015,KAE,Fastest rates on increase in RS in the tropics
+Total Rs,bottom-up,Bond-Lamberty & Thompson (2010),98.0,12.0,0.1,1989-2008,0.5 degrees,annual,statistical,"climate, LAI, N deposition",http://dx.doi.org/10.1038/nature08930,KAE,
+Total Rs,bottom-up,Zhao et al. (2017),93.3,6.1,0.04,1960-2012,5 arcminutes,annual,machine learning,"climate, biome type",https://doi.org/10.1002/2016EF000480,KAE,"Tropical forests have the ""highest rates"" of soil CO2 production; tundra the lowest. High inter-annual variability for global deserts, savannas, shrublands, boreal forest, *and* wetlands (i.e., swamps, bogs, forested wetlands)."
+Total Rs,bottom-up,Peng & Apps (2000),69.0,,,,0.5 degrees,annual,statistical,"climate, biome type",https://content.iospress.com/articles/journal-of-environmental-sciences/jes12-3-01,KAE,
+Total Rs,bottom-up,Lu et al. (2021),85.5,40.4,,1982-2012,0.5 degrees,annual,machine learning,"climate, LAI, PAR, SOC",http://dx.doi.org/10.1088/1748-9326/abf526,BBL,
+Total Rs,top-down,Adachi et al. (2017),94.3,,-0.0125,2001-2009,4 km,daily,statistical,"temperature, SWC",http://dx.doi.org/10.1016/j.jenvman.2017.05.076,BBL,MODIS
+Total Rs,bottom-up,Xu et al. (2016),94.3,17.9,,,(none-scaled by land cover),,statistical,none,http://dx.doi.org/10.1016/j.jplph.2016.08.007,BBL,
+Total Rs,bottom-up,Schlesinger (1977),75.0,,,,(none-scaled by land cover),annual,statistical,none,https://www.jstor.org/stable/2096721,BBL,
+Total Rs,bottom-up,Raich and Potter (1995),76.5,,,1963-1991,0.5 degrees,monthly,statistical,"temperature, precipitation",http://dx.doi.org/10.1029/94gb02723,BBL,
+Total Rs,bottom-up,Raich and Schlesinger (1992),68.0,4.0,,,,,statistical,,http://dx.doi.org/10.1034/j.1600-0889.1992.t01-1-00001.x,BBL,
+Total Rs,bottom-up,Raich et al. (2002),80.4,33.2,,1980-1994,0.5 degrees,monthly,statistical,,http://dx.doi.org/10.1046/j.1365-2486.2002.00511.x,BBL,
+Total Rs,bottom-up,Chen et al. (2013),94.4,8.7,0.04,1970-2008,0.5 degrees,annual,statistical,"temperature, precipitation, SOC",http://dx.doi.org/10.1007/s11434-013-5912-1,BBL,
+Total Rs,bottom-up,Hashimoto et al. (2012),79.0,10.2,,,0.5 degrees,monthly,other,"temperature, SWC",http://dx.doi.org/10.1371/journal.pone.0041962,BBL,statistical/mechanistic
+Total Rs,bottom-up,Peng and Apps (2000),69.0,,,,0.5 degrees,annual,statistical,"temperature, precipitation, AET",,BBL,"Peng and Apps: Simulating global soil-C02 flux and its response to climate change, J. Environ. Sci. , 12, 257–265, 2000."
+Total Rs,bottom-up,Zhao et al. (2017),93.3,6.1,0.04,1960-2012,5 arcminutes,annual,statistical,"MAT, MAP, LAI, NPP, and SOC",http://dx.doi.org/10.1002/2016EF000480,BBL,
+Total Rs,bottom-up,Jian et al. (2018),78.8,7.0,0.05,1961-2014,0.5 degrees,monthly,statistical,temperature,http://dx.doi.org/10.1029/2018EF000937,BBL,
+Total Rs,bottom-up,Warner et al. (2019),87.9,18.6,,,1 km,annual,statistical,"17 climatological, phenological, and geophysical predictors",http://dx.doi.org/10.1029/2019GB006264,BBL,
+Total Rs,bottom-up,Stell et al. (2021),96.4,73.4,,1961-2017,1 km,annual,statistical,"annual mean precipitation, annual mean temperature, EVI (mean monthly), mosaic vegetation, artifical surfaces and associated areas, geologial ages, land cover, mean potential incoming solar radiation, mean value of 8 day LAI, long term precipitation, slope, topographic wetness index",http:/doi/10.1111/gcb.15666,EMS,
+Total Rs,,"Stell et al. (2021)...note: optimization calculation (i.e., an estimate of what Rs should be)",96.4,21.4,,1961-2017,1 km,annual,statistical,"annual mean precipitation, annual mean temperature, EVI (mean monthly), mosaic vegetation, artifical surfaces and associated areas, geologial ages, land cover, mean potential incoming solar radiation, mean value of 8 day LAI, long term precipitation, slope, topographic wetness index",http:/doi/10.1111/gcb.15666,RV,"This is an estimate of what Rs ""should be"" based on an optimized sampling that results in a similar total Rs but with a reduced uncertainty. "
+Total Rs,,,,,,,,,,,,ZL,"Rs paritioned from published GPP (EC-upscaled, RS, and atmopshere inversion). Note this Rs is much smaller than the literatured-drived Rs (see paper for details)"
+Total Rs,inferred from GPP partition approch,Jian et al (2022),68,,,,,,other,,https://doi.org/10.1038/s41467-022-29391-5,,
+Belowground Ra,bottom-up,Hashimoto et al. (2015),40.0,,,1965 - 2012,0.5 degrees,monthly,statistical,climate (temperature and precipitation),https://doi.org/10.5194/bg-12-4121-2015,KAE,
