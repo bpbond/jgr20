@@ -5,6 +5,8 @@
 library(readr)
 library(ggplot2)
 library(tibble)
+library(dplyr)
+library(patchwork)
 theme_set(theme_bw())
 
 dat <- read_csv("ResCom_ Global Respiration estimates and trends - Sheet1.csv", skip = 1)
@@ -77,3 +79,98 @@ ggplot(rs, aes(Year, Flux_mean)) +
   )
 #  geom_segment(data = recent_rs, x = 2004, xend = 2023, aes(yend = Flux_mean), linetype = 2)
 ggsave("resp.png", width = 8, height = 7)
+
+## plot length of observations needed to observe climate-driven change at a single site
+srdb <- read_csv("srdb-data.csv")
+srdb %>% 
+  select(YearsOfData) %>% 
+  filter(!is.na(YearsOfData)) %>% 
+  ggplot(aes(YearsOfData)) +
+  geom_histogram(col = "black") +
+  annotate("text", 1.5, 11100, label = paste("(a)")) +
+  ylim(0, 11900)+
+  labs(x = "Record length (year)", y = "Count (n)") -> length_dens
+
+
+# when would expect to see significance? toy-example
+# prepare some data first
+
+median_error <- 0.199  # this is Rs measuring error, this value is from COSORE
+
+# set.seed(1234)
+
+trend_emergence <- function(rd, theilsen = F) {
+  Year <- seq_len(length(rd))
+  trend_p <- rep(NA, length(rd))
+  for(i in seq_along(trend_p)) {
+    if(i > 2) {
+      if(theilsen) {
+        df <- tibble(Year = Year[1:i], rd = rd[1:i])
+        suppressWarnings(m <- mblm::mblm(rd ~ Year, data = df))  # mblm doesn't like form below
+      } else {
+        m <- suppressWarnings(lm(rd[1:i] ~ Year[1:i]))
+      }
+      # Extract 2nd row (Year) and 4th column (Pr>[t] or Pr>|V|)
+      trend_p[i] <- summary(m)$coefficients[2, 4]
+    }
+  }
+  trend_p
+}
+
+fuzz <- function(x, error) {
+  x * rnorm(length(x), mean = 1, sd = error)
+}
+
+# Temperature has risen 0.9 C in 40 years, more or less
+dTdt <- round(0.9 / 40.0, 3)
+q10 <- 2
+R0 = 1.0
+respdata <- tibble(Year = 1:150,
+                   Temp = dTdt * Year,
+                   Resp = R0 * q10 ^ (Temp / 10),
+                   # This is interannual variability: from SRDB
+                   Resp_iav = fuzz(Resp, 0.098),  # this is SRDB Rs_interannual_err
+                   Resp_fuzz = fuzz(Resp_iav, median_error))
+
+
+# run the analysis and store the results
+results <- list()
+library(parallel)
+n_sims <- 150
+results <- mclapply(seq_len(n_sims), do_sim, respdata, error = median_error)
+
+# summary results
+results %>% 
+  bind_rows %>% 
+  group_by(Year) %>% 
+  summarise(n = n(), 
+            Temp = mean(Temp), 
+            Resp = mean(Resp),
+            Resp_iav_sd = sd(Resp_iav),
+            Resp_iav = mean(Resp_iav),
+            Resp_fuzz_sd = sd(Resp_fuzz),          
+            Resp_fuzz = mean(Resp_fuzz), 
+            trend_p_sd = sd(trend_p), 
+            trend_p = mean(trend_p)) %>% 
+  filter(!is.na(trend_p)) ->
+  results_summary
+
+# plot the trend analysis result
+p_TheilSen <- ggplot(results_summary, aes(Year, trend_p, color = trend_p < 0.05)) +
+  geom_point() +
+  geom_line(aes(y = Resp_fuzz)) +
+  geom_line(aes(y = Resp), color = "grey") +
+  geom_ribbon(aes(ymin = Resp_fuzz - Resp_fuzz_sd, 
+                  ymax = Resp_fuzz + Resp_fuzz_sd, 
+                  fill = trend_p < 0.05), color = NA, alpha = I(0.35)) +
+  guides(color = FALSE, fill = FALSE) +
+  annotate("text", 10, 1.55, label = paste("(b)")) +
+  xlab("Length of observations needed (year)") +
+  ylab("Theil-sen p-value /// Respiration")
+
+print(p_TheilSen)
+
+length_dens / p_TheilSen
+
+ggsave("dens_length_obs.png", width = 8, height = 7)
+
