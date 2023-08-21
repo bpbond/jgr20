@@ -4,10 +4,11 @@
 
 library(readr)
 library(ggplot2)
+theme_set(theme_bw())
 library(tibble)
 library(dplyr)
 library(patchwork)
-theme_set(theme_bw())
+library(mblm)
 
 dat <- read_csv("ResCom_ Global Respiration estimates and trends - Sheet1.csv", skip = 1)
 
@@ -65,9 +66,9 @@ label_dat <- tibble(Flux = c("Rh", "Rs"), lab = c("(a)~R[H]", "(b)~R[S]"),
 recent_rs <- aggregate(Flux_mean ~ Flux, FUN = median, data = rs[rs$Year > 2003,])
 print(recent_rs)
 
-ggplot(rs, aes(Year, Flux_mean)) +  
-  geom_linerange(aes(ymin = Flux_mean - Flux_sd, ymax = Flux_mean + Flux_sd), color= "grey") + 
-  geom_point(aes(color = `Model type`)) +
+p <- ggplot(rs, aes(Year, Flux_mean)) +  
+  geom_pointrange(aes(ymin = Flux_mean - Flux_sd, ymax = Flux_mean + Flux_sd, color = `Model type`),
+                  position = position_dodge(width = 1)) + 
   ylab(expression(Flux~(Pg~C~yr^-1))) +
   facet_grid(Flux ~ ., scales = "free_y") +
   coord_cartesian(xlim = c(MINYEAR, 2023)) +
@@ -77,6 +78,9 @@ ggplot(rs, aes(Year, Flux_mean)) +
     strip.background = element_blank(),
     strip.text = element_blank()
   )
+
+print(p)
+
 #  geom_segment(data = recent_rs, x = 2004, xend = 2023, aes(yend = Flux_mean), linetype = 2)
 ggsave("resp.png", width = 8, height = 7)
 
@@ -99,7 +103,7 @@ median_error <- 0.199  # this is Rs measuring error, this value is from COSORE
 
 # set.seed(1234)
 
-trend_emergence <- function(rd, theilsen = F) {
+trend_emergence <- function(rd, theilsen = FALSE) {
   Year <- seq_len(length(rd))
   trend_p <- rep(NA, length(rd))
   for(i in seq_along(trend_p)) {
