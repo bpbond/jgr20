@@ -84,6 +84,8 @@ print(p)
 #  geom_segment(data = recent_rs, x = 2004, xend = 2023, aes(yend = Flux_mean), linetype = 2)
 ggsave("resp.png", width = 8, height = 7)
 
+
+
 ## plot length of observations needed to observe climate-driven change at a single site
 srdb <- read_csv("srdb-data.csv")
 srdb %>% 
@@ -136,6 +138,12 @@ respdata <- tibble(Year = 1:150,
                    Resp_iav = fuzz(Resp, 0.098),  # this is SRDB Rs_interannual_err
                    Resp_fuzz = fuzz(Resp_iav, median_error))
 
+do_sim <- function(i, respdata, error = 0.0) {
+  # This is observational error
+  respdata$Resp_fuzz <- fuzz(respdata$Resp_iav, error)
+  respdata$trend_p <- trend_emergence(respdata$Resp_fuzz)
+  respdata
+}
 
 # run the analysis and store the results
 results <- list()
@@ -143,7 +151,7 @@ library(parallel)
 n_sims <- 150
 results <- mclapply(seq_len(n_sims), do_sim, respdata, error = median_error)
 
-# summary results
+# summarise results
 results %>% 
   bind_rows %>% 
   group_by(Year) %>% 
@@ -160,17 +168,15 @@ results %>%
   results_summary
 
 # plot the trend analysis result
-p_TheilSen <- ggplot(results_summary, aes(Year, trend_p, color = trend_p < 0.05)) +
+p_TheilSen <- ggplot(results_summary, aes(Year, Resp_fuzz, color = trend_p < 0.05)) +
   geom_point() +
-  geom_line(aes(y = Resp_fuzz)) +
   geom_line(aes(y = Resp), color = "grey") +
   geom_ribbon(aes(ymin = Resp_fuzz - Resp_fuzz_sd, 
                   ymax = Resp_fuzz + Resp_fuzz_sd, 
                   fill = trend_p < 0.05), color = NA, alpha = I(0.35)) +
   guides(color = FALSE, fill = FALSE) +
-  annotate("text", 10, 1.55, label = paste("(b)")) +
-  xlab("Length of observations needed (year)") +
-  ylab("Theil-sen p-value /// Respiration")
+  xlab("Years of observations") +
+  ylab("Soil respiration (normalized)")
 
 print(p_TheilSen)
 
