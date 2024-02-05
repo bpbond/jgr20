@@ -1,7 +1,6 @@
 # jgr20
 
-Code for the JGR 20-year review paper
-BBL April 2023
+Code and data for the figures in 2023JG007637R,
+"Twenty years of progress, challenges, and opportunities in measuring and understanding soil respiration"
 
-Line added on the hpc
-
+Accepted by _JGR-Biogeosciences_ January 2024
